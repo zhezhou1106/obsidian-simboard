@@ -1,0 +1,10 @@
+{
+	"id": "simboard",
+	"name": "Simboard",
+	"version": "0.1.0",
+	"minAppVersion": "1.5.0",
+	"description": "A widget-based home dashboard: banner with clock and calendar, quick links, a file-backed todo list and vault activity.",
+	"author": "zhezhou",
+	"authorUrl": "https://github.com/zhezhou1106",
+	"isDesktopOnly": false
+}

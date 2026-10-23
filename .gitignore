@@ -1,0 +1,17 @@
+# dependencies
+node_modules/
+
+# build output (attached to GitHub releases, not committed)
+main.js
+styles.css
+*.js.map
+
+# local vault sync config
+.env.local
+
+# Obsidian runtime data, if the repo is ever opened as a plugin folder
+data.json
+activity.json
+
+# system
+.DS_Store
