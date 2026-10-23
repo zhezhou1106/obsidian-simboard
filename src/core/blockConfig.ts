@@ -38,7 +38,7 @@ export function parseBlockConfig(source: string): BlockConfig {
 	if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) return cfg;
 	for (const [key, value] of Object.entries(parsed as Record<string, unknown>)) {
 		if (key === "widgets") cfg.widgets = toList(value);
-		else if (key === "name") cfg.name = value == null ? null : String(value);
+		else if (key === "name") cfg.name = typeof value === "string" || typeof value === "number" ? String(value) : null;
 		else if (value && typeof value === "object" && !Array.isArray(value)) cfg.options[key] = value as Record<string, unknown>;
 	}
 	return cfg;

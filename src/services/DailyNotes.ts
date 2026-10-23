@@ -2,7 +2,7 @@ import { App, moment, normalizePath, TAbstractFile, TFile, TFolder } from "obsid
 import { SimboardSettings } from "../settings/types";
 import { localIso } from "../utils/date";
 
-const DEFAULT_FORMAT = "YYYY-MM-DD";
+export const DEFAULT_DAILY_FORMAT = "YYYY-MM-DD";
 const ISO_PREFIX = /^(\d{4}-\d{2}-\d{2})/;
 
 interface DailyNotesConfig {
@@ -43,7 +43,7 @@ export class DailyNotesService {
 		const own = this.getSettings().dailyNotes;
 		const core = this.coreOptions();
 		const folder = (own.folder || core.folder || "").trim();
-		const format = (own.format || core.format || DEFAULT_FORMAT).trim();
+		const format = (own.format || core.format || DEFAULT_DAILY_FORMAT).trim();
 		return { folder: folder ? normalizePath(folder) : "", format };
 	}
 

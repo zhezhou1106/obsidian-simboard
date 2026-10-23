@@ -4,6 +4,10 @@
 
 - Commands: open the dashboard note, insert a dashboard block, refresh open dashboards.
 - Optional ribbon icon that opens the dashboard; "Dashboard note" setting.
+- Settings appear in Obsidian's settings search (1.13+), with a fallback for older versions.
+- Quick flicks when dragging a todo now land in the right slot.
+- More reliable Enter handling with IME input (e.g. pinyin) in the todo field.
+- Passes Obsidian's official lint rules (`npm run lint`, also run in CI).
 
 ## 0.1.0
 

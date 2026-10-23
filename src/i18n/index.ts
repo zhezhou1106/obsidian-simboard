@@ -1,4 +1,4 @@
-import { getLanguage } from "obsidian";
+import { moment } from "obsidian";
 import { en, StringKey } from "./en";
 
 type Strings = Partial<Record<StringKey, string>>;
@@ -12,12 +12,8 @@ let active: Strings | null = null;
 
 function strings(): Strings {
 	if (!active) {
-		let lang = "en";
-		try {
-			lang = getLanguage();
-		} catch {
-			/* older Obsidian without getLanguage() */
-		}
+		// Obsidian keeps moment's locale in sync with the app language (e.g. "en", "zh-cn").
+		const lang = (moment.locale() || "en").toLowerCase();
 		active = LOCALES[lang] ?? LOCALES[lang.split("-")[0]] ?? en;
 	}
 	return active;

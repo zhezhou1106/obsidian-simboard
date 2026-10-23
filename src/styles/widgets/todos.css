@@ -145,3 +145,6 @@ body.simboard-dragging * { cursor: grabbing !important; }
   .simboard .sb-task.is-dropping,
   .simboard .sb-task-box { transition: none !important; }
 }
+
+/* rows clip their content while expanding / collapsing */
+.simboard .sb-task.is-animating { overflow: hidden; }

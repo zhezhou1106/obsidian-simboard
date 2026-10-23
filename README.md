@@ -94,6 +94,7 @@ npm install
 cp .env.example .env.local   # set OBSIDIAN_VAULT to your vault
 npm run dev                  # watch + build + sync into the vault + hot reload
 npm run build                # type-check + one-off build (also syncs)
+npm run lint                 # Obsidian's official review rules (eslint-plugin-obsidianmd)
 ```
 
 With `.env.local` set, each build copies `main.js`, `manifest.json` and

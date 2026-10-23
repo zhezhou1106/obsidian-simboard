@@ -233,9 +233,8 @@ export class DashboardRenderer extends MarkdownRenderChild {
 
 	private onVaultEvent(file: TAbstractFile, oldPath?: string): void {
 		for (const inst of this.instances) {
-			const check = inst.widget.shouldRefresh;
-			if (!check) continue;
-			void Promise.resolve(check.call(inst.widget, file, oldPath, this.ctx))
+			if (!inst.widget.shouldRefresh) continue;
+			void Promise.resolve(inst.widget.shouldRefresh(file, oldPath, this.ctx))
 				.then((yes) => {
 					if (yes) this.markDirty(inst);
 				})

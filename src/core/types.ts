@@ -62,6 +62,9 @@ export interface DashboardWidget<D = unknown> {
 	shouldRefresh?(file: TAbstractFile, oldPath: string | undefined, ctx: WidgetContext): boolean | Promise<boolean>;
 }
 
-/** Erases a widget's data type so heterogeneous widgets can share one registry. */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type AnyWidget = DashboardWidget<any>;
+/**
+ * A widget of any data type, so heterogeneous widgets can share one registry.
+ * (`collect`/`render` are method signatures, which TypeScript checks
+ * bivariantly — that is what lets `DashboardWidget<BannerData>` fit here.)
+ */
+export type AnyWidget = DashboardWidget<unknown>;

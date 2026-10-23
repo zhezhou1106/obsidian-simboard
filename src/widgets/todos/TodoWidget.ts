@@ -15,7 +15,6 @@ const EASE = "cubic-bezier(.2,.8,.2,1)";
 const ANIM_MS = 220;
 const CHECK_HOLD_MS = 280;
 const CLEAR_ARM_MS = 3000;
-const IME_KEYCODE = 229;
 
 /**
  * Todo card backed by one markdown file (see `TodoStore`).
@@ -126,9 +125,14 @@ class TodoCard {
 			this.submitAdd();
 			this.input.focus();
 		});
+		// Don't submit while an IME (e.g. pinyin) is converting. Safari reports the
+		// Enter that commits a composition *after* compositionend, so the flag is
+		// cleared on the next tick rather than immediately.
+		let composing = false;
+		this.input.addEventListener("compositionstart", () => (composing = true));
+		this.input.addEventListener("compositionend", () => window.setTimeout(() => (composing = false), 0));
 		this.input.addEventListener("keydown", (e) => {
-			// isComposing: don't submit while an IME (e.g. pinyin) is converting.
-			if (e.key === "Enter" && !e.isComposing && e.keyCode !== IME_KEYCODE) {
+			if (e.key === "Enter" && !e.isComposing && !composing) {
 				e.preventDefault();
 				this.submitAdd();
 			}
@@ -231,7 +235,7 @@ class TodoCard {
 			};
 			if (this.reduce || !row.animate || !row.isConnected) return finish();
 			const cs = getComputedStyle(row);
-			row.style.overflow = "hidden";
+			row.addClass("is-animating");
 			const anim = row.animate(
 				[
 					{ height: `${row.offsetHeight}px`, opacity: 1, paddingTop: cs.paddingTop, paddingBottom: cs.paddingBottom, borderTopWidth: cs.borderTopWidth },
@@ -248,7 +252,7 @@ class TodoCard {
 		if (this.reduce || !row.animate) return;
 		const cs = getComputedStyle(row);
 		const h = row.offsetHeight;
-		row.style.overflow = "hidden";
+		row.addClass("is-animating");
 		const anim = row.animate(
 			[
 				{ height: "0px", opacity: 0, paddingTop: "0px", paddingBottom: "0px" },
@@ -256,7 +260,7 @@ class TodoCard {
 			],
 			{ duration: ANIM_MS, easing: EASE },
 		);
-		anim.onfinish = anim.oncancel = () => (row.style.overflow = "");
+		anim.onfinish = anim.oncancel = () => row.removeClass("is-animating");
 	}
 
 	private updateEmpty(): void {

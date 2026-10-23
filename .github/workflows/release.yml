@@ -31,6 +31,7 @@ jobs:
           fi
 
       - run: npm ci
+      - run: npm run lint
       - run: npm run build
 
       - name: Create draft release

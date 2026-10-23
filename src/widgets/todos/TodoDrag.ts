@@ -8,15 +8,15 @@
 export interface TodoDragOptions {
 	list: HTMLElement;
 	/** Rows that are not animating out, in DOM order. */
-	liveRows(): HTMLElement[];
+	liveRows: () => HTMLElement[];
 	reducedMotion: boolean;
 	/** Called after the DOM has been reordered. */
-	onReorder(): void;
+	onReorder: () => void;
 	/** Drag started / ended — used to defer re-renders while a row is lifted. */
-	onDragStart(): void;
-	onDragEnd(): void;
+	onDragStart: () => void;
+	onDragEnd: () => void;
 	/** Registers cleanup with the widget scope. */
-	register(cleanup: () => void): void;
+	register: (cleanup: () => void) => void;
 }
 
 interface Press {
@@ -49,6 +49,11 @@ const MAX_SCROLL_STEP = 12;
 const DROP_FALLBACK_MS = 260;
 const BODY_DRAG_CLASS = "simboard-dragging";
 
+/** Sets (or, with "", clears) a row's inline transform. */
+function setTransform(el: HTMLElement, value: string): void {
+	el.setCssProps({ transform: value });
+}
+
 function findScroller(el: HTMLElement): HTMLElement {
 	for (let p = el.parentElement; p; p = p.parentElement) {
 		const oy = getComputedStyle(p).overflowY;
@@ -64,7 +69,7 @@ export function attachTodoDrag(opts: TodoDragOptions): void {
 	let raf = 0;
 
 	const requestFrame = () => {
-		if (!raf) raf = requestAnimationFrame(frame);
+		if (!raf) raf = window.requestAnimationFrame(frame);
 	};
 
 	function frame(): void {
@@ -89,7 +94,7 @@ export function attachTodoDrag(opts: TodoDragOptions): void {
 		const last = m[m.length - 1];
 		let dy = d.pointerY - d.startY + (d.scroller.scrollTop - d.startScroll);
 		dy = Math.max(-m[from].top - 6, Math.min(last.top + last.h - (m[from].top + m[from].h) + 6, dy));
-		d.row.style.transform = `translate3d(0,${dy}px,0) scale(1.015)`;
+		setTransform(d.row, `translate3d(0,${dy}px,0) scale(1.015)`);
 
 		const center = m[from].top + m[from].h / 2 + dy;
 		const H = m[from].h;
@@ -107,7 +112,7 @@ export function attachTodoDrag(opts: TodoDragOptions): void {
 			}
 			if (d.shifts[j] !== s) {
 				d.shifts[j] = s;
-				d.rows[j].style.transform = s ? `translate3d(0,${s}px,0)` : "";
+				setTransform(d.rows[j], s ? `translate3d(0,${s}px,0)` : "");
 			}
 		}
 		d.to = to;
@@ -156,20 +161,25 @@ export function attachTodoDrag(opts: TodoDragOptions): void {
 	function endDrag(commit: boolean): void {
 		const d = drag;
 		if (!d) return;
-		drag = null;
-		if (raf) {
-			cancelAnimationFrame(raf);
+		const cancelFrame = () => {
+			if (raf) window.cancelAnimationFrame(raf);
 			raf = 0;
-		}
+		};
+		cancelFrame();
+		// Apply the last pointer position now: a quick flick can be released before
+		// any animation frame ran (and hidden windows don't run frames at all).
+		if (commit) frame();
+		cancelFrame();
+		drag = null;
 		const { row, rows, from, metrics: m } = d;
 		const to = commit ? d.to : from;
-		if (!commit) rows.forEach((r) => r !== row && (r.style.transform = ""));
+		if (!commit) rows.forEach((r) => r !== row && setTransform(r, ""));
 		let target = 0;
 		if (to > from) target = m[to].top + m[to].h - (m[from].top + m[from].h);
 		else if (to < from) target = m[to].top - m[from].top;
 		row.removeClass("is-dragging");
 		row.addClass("is-dropping");
-		row.style.transform = `translate3d(0,${target}px,0)`;
+		setTransform(row, `translate3d(0,${target}px,0)`);
 		document.body.removeClass(BODY_DRAG_CLASS);
 
 		let settled = false;
@@ -177,7 +187,7 @@ export function attachTodoDrag(opts: TodoDragOptions): void {
 			if (settled) return;
 			settled = true;
 			list.addClass("is-no-anim");
-			rows.forEach((r) => (r.style.transform = ""));
+			rows.forEach((r) => setTransform(r, ""));
 			row.removeClass("is-dropping");
 			if (to !== from) {
 				if (to > from) rows[to].after(row);
@@ -252,7 +262,7 @@ export function attachTodoDrag(opts: TodoDragOptions): void {
 			if (!drag) return;
 		}
 		ev.preventDefault();
-		(drag as Drag).pointerY = ev.clientY;
+		drag.pointerY = ev.clientY;
 		requestFrame();
 	}
 
@@ -313,7 +323,7 @@ export function attachTodoDrag(opts: TodoDragOptions): void {
 	// Runs only when the widget re-renders or unloads (never mid-drag: drags hold the widget).
 	opts.register(() => {
 		endPress();
-		if (raf) cancelAnimationFrame(raf);
+		if (raf) window.cancelAnimationFrame(raf);
 		raf = 0;
 		drag = null;
 		window.removeEventListener("keydown", onKey, true);
