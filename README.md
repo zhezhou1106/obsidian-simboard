@@ -12,6 +12,10 @@ A widget-based home dashboard for [Obsidian](https://obsidian.md). Drop a
 Colors come from your theme, so Simboard works with any community theme.
 There is also an optional high-contrast e-ink mode.
 
+![Simboard dashboard: banner with clock and calendar, quick links, todos and vault stats](docs/preview.png)
+
+> Simboard is desktop-only for now.
+
 ## Usage
 
 ````markdown

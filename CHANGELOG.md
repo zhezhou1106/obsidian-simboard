@@ -7,6 +7,7 @@
 - Settings appear in Obsidian's settings search (1.13+), with a fallback for older versions.
 - Quick flicks when dragging a todo now land in the right slot.
 - More reliable Enter handling with IME input (e.g. pinyin) in the todo field.
+- Desktop-only for now (`isDesktopOnly: true`).
 - Passes Obsidian's official lint rules (`npm run lint`, also run in CI).
 
 ## 0.1.0
