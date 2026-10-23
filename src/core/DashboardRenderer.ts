@@ -37,6 +37,7 @@ export class DashboardRenderer extends MarkdownRenderChild {
 	/** Bumped on every full rebuild so stale async renders are dropped. */
 	private generation = 0;
 	private rebuildPending = false;
+	private root: HTMLElement | null = null;
 	private dayIso = localIso(new Date());
 
 	constructor(
@@ -89,6 +90,17 @@ export class DashboardRenderer extends MarkdownRenderChild {
 		this.build();
 	}
 
+	/**
+	 * Applies root-level appearance settings (width, e-ink) in place — cheap
+	 * enough to run on every slider tick, no widget re-render needed.
+	 */
+	applyAppearance(): void {
+		if (!this.root) return;
+		const settings = this.plugin.settings;
+		this.root.toggleClass("simboard--eink", settings.appearance.einkLightMode);
+		this.root.setCssProps({ "--sb-max-width": `${settings.layout.maxWidth}px` });
+	}
+
 	// ---------- layout ----------
 
 	private build(): void {
@@ -104,8 +116,8 @@ export class DashboardRenderer extends MarkdownRenderChild {
 		el.empty();
 
 		const root = el.createDiv({ cls: "simboard" });
-		root.toggleClass("simboard--eink", settings.appearance.einkLightMode);
-		root.setCssProps({ "--sb-max-width": `${settings.layout.maxWidth}px` });
+		this.root = root;
+		this.applyAppearance();
 
 		if (this.block.error) root.createDiv({ cls: "sb-error", text: this.block.error });
 

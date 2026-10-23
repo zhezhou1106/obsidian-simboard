@@ -14,6 +14,8 @@ const RATIO_LABELS: Record<BannerRatio, string> = {
 };
 
 const WIDGET_LIST = BUILTIN_WIDGET_ORDER.join(", ");
+const MIN_WIDTH = 480;
+const MAX_WIDTH = 1600;
 
 /** One settings row: a name, a description, and the controls `render` adds. */
 interface Row {
@@ -101,19 +103,16 @@ export class SimboardSettingTab extends PluginSettingTab {
 							),
 					},
 					{
-						name: "Content max width",
-						desc: "Maximum width of the dashboard column, in pixels.",
+						name: "Dashboard width",
+						desc: "Maximum width of the dashboard, in pixels. A note without the simboard-home class is also limited by the readable line width.",
 						render: (st) =>
-							void st.addText((text) =>
-								text
-									.setPlaceholder("900")
-									.setValue(String(s.layout.maxWidth))
+							void st.addSlider((sl) =>
+								sl
+									.setLimits(MIN_WIDTH, MAX_WIDTH, 20)
+									.setValue(s.layout.maxWidth)
 									.onChange((v) => {
-										const n = parseInt(v, 10);
-										if (Number.isFinite(n)) {
-											s.layout.maxWidth = Math.min(2000, Math.max(320, n));
-											this.save();
-										}
+										s.layout.maxWidth = v;
+										void this.plugin.saveAppearance();
 									}),
 							),
 					},
@@ -139,7 +138,7 @@ export class SimboardSettingTab extends PluginSettingTab {
 							void st.addToggle((tg) =>
 								tg.setValue(s.appearance.einkLightMode).onChange((v) => {
 									s.appearance.einkLightMode = v;
-									this.save();
+									void this.plugin.saveAppearance();
 								}),
 							),
 					},

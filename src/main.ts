@@ -77,6 +77,12 @@ export default class SimboardPlugin extends Plugin {
 		this.refreshDebounced();
 	}
 
+	/** Persists an appearance-only change (width, e-ink) and applies it live, without re-rendering widgets. */
+	async saveAppearance(): Promise<void> {
+		this.renderers.forEach((r) => r.applyAppearance());
+		await this.saveData(this.settings);
+	}
+
 	refreshDashboards(): void {
 		this.renderers.forEach((r) => r.rebuild());
 	}
