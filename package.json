@@ -1,6 +1,6 @@
 {
   "name": "obsidian-simboard",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Turn any note into a home dashboard with a banner clock, a calendar, quick links, a Markdown-backed todo list and vault activity.",
   "main": "main.js",
   "private": true,

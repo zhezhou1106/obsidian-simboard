@@ -1,7 +1,7 @@
 {
 	"id": "simboard",
 	"name": "Simboard",
-	"version": "0.1.0",
+	"version": "1.0.0",
 	"minAppVersion": "1.5.0",
 	"description": "Turn any note into a home dashboard with a banner clock, a calendar, quick links, a Markdown-backed todo list and vault activity.",
 	"author": "zhezhou",
