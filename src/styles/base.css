@@ -29,7 +29,7 @@
   width: 100%;
   max-width: var(--sb-max-width, 900px);
   margin: 0 auto;
-  padding: 0 28px;
+  padding: 0;
   background: var(--sb-bg);
   color: var(--sb-text);
   font-family: var(--font-interface);

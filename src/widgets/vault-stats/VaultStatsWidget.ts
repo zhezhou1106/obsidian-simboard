@@ -64,6 +64,7 @@ export const VaultStatsWidget: DashboardWidget<VaultStatsData> = {
 		}
 
 		const heat = el.createDiv({ cls: "sb-heat" });
+		heat.setCssProps({ "--sb-heat-weeks": String(Math.ceil(data.heat.length / 7)) });
 		for (const cell of data.heat) {
 			const lvl = level(cell.count);
 			const c = heat.createDiv({ cls: "sb-heat-cell" });

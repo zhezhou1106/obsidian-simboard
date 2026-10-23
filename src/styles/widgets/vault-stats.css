@@ -21,19 +21,17 @@
   white-space: nowrap;
   color: var(--sb-faint);
 }
+/* Columns (weeks) shrink to fit the card — up to 15px each, square cells. */
 .simboard .sb-heat {
   display: grid;
   grid-auto-flow: column;
-  grid-template-rows: repeat(7, 1fr);
+  grid-template-rows: repeat(7, auto);
+  grid-template-columns: repeat(var(--sb-heat-weeks, 18), minmax(0, 15px));
   gap: 3px;
-  overflow-x: auto;
   padding-bottom: 4px;
 }
-.simboard .sb-heat-cell { flex: none; width: 11px; height: 11px; border-radius: 3px; background: var(--sb-track); }
+.simboard .sb-heat-cell { width: 100%; aspect-ratio: 1; border-radius: 3px; background: var(--sb-track); }
 .simboard .sb-heat-cell.is-l1 { background: color-mix(in srgb, var(--sb-accent) 25%, var(--sb-track)); }
 .simboard .sb-heat-cell.is-l2 { background: color-mix(in srgb, var(--sb-accent) 45%, var(--sb-track)); }
 .simboard .sb-heat-cell.is-l3 { background: color-mix(in srgb, var(--sb-accent) 70%, var(--sb-track)); }
 .simboard .sb-heat-cell.is-l4 { background: var(--sb-accent); box-shadow: 0 0 7px -1px var(--sb-glow); }
-.simboard .sb-heat::-webkit-scrollbar { height: 6px; }
-.simboard .sb-heat::-webkit-scrollbar-thumb { background: var(--sb-surface-2); border-radius: 3px; }
-.simboard .sb-heat::-webkit-scrollbar-track { background: transparent; }

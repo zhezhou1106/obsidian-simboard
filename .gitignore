@@ -8,6 +8,7 @@ styles.css
 
 # local vault sync config
 .env.local
+.env.test.local
 
 # Obsidian runtime data, if the repo is ever opened as a plugin folder
 data.json

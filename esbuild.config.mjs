@@ -15,7 +15,9 @@ import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
 
-const prod = process.argv[2] === "production";
+const prod = process.argv.includes("production");
+// `--test` syncs to the vault in .env.test.local instead of .env.local.
+const envFile = process.argv.includes("--test") ? ".env.test.local" : ".env.local";
 const root = path.dirname(new URL(import.meta.url).pathname);
 const manifest = JSON.parse(fs.readFileSync(path.join(root, "manifest.json"), "utf8"));
 
@@ -30,7 +32,7 @@ function readEnvFile(file) {
 	return out;
 }
 
-const env = { ...readEnvFile(path.join(root, ".env.local")), ...process.env };
+const env = { ...readEnvFile(path.join(root, envFile)), ...process.env };
 const vaultPath = env.OBSIDIAN_VAULT ? path.resolve(env.OBSIDIAN_VAULT.replace(/^~(?=$|\/)/, process.env.HOME || "~")) : "";
 const vaultName = env.OBSIDIAN_VAULT_NAME || (vaultPath ? path.basename(vaultPath) : "");
 const pluginDir = vaultPath ? path.join(vaultPath, ".obsidian", "plugins", manifest.id) : "";
@@ -104,6 +106,6 @@ if (prod) {
 	await Promise.all([jsContext.rebuild(), cssContext.rebuild()]);
 	await Promise.all([jsContext.dispose(), cssContext.dispose()]);
 } else {
-	if (!pluginDir) console.warn("[sync] No vault configured — copy .env.example to .env.local to enable vault sync.");
+	if (!pluginDir) console.warn(`[sync] No vault configured — copy .env.example to ${envFile} to enable vault sync.`);
 	await Promise.all([jsContext.watch(), cssContext.watch()]);
 }

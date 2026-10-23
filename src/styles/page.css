@@ -29,5 +29,7 @@
 .simboard-home .cm-line { padding-left: 0 !important; padding-right: 0 !important; }
 .simboard-home .markdown-preview-view { padding: 0 !important; }
 .simboard-home p:empty { display: none; }
+/* the full-bleed page has no note margins, so the dashboard brings its own */
+.simboard-home .simboard { padding: 0 28px; }
 
 .block-language-simboard { padding: 0; margin: 0; }
