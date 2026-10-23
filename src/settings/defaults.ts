@@ -7,6 +7,10 @@ export const BUILTIN_WIDGET_ORDER = ["banner", "calendar", "quick-links", "todos
 
 export const DEFAULT_SETTINGS: SimboardSettings = {
 	settingsVersion: SETTINGS_VERSION,
+	home: {
+		notePath: "",
+		ribbonIcon: true,
+	},
 	layout: {
 		maxWidth: 900,
 		defaultWidgets: [...BUILTIN_WIDGET_ORDER],

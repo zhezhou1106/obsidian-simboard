@@ -36,6 +36,7 @@ function quickLinks(v: unknown): QuickLink[] {
 export function normalizeSettings(stored: unknown): SimboardSettings {
 	const s = obj(stored);
 	const D = DEFAULT_SETTINGS;
+	const home = obj(s.home);
 	const layout = obj(s.layout);
 	const appearance = obj(s.appearance);
 	const banner = obj(s.banner);
@@ -47,6 +48,10 @@ export function normalizeSettings(stored: unknown): SimboardSettings {
 
 	return {
 		settingsVersion: SETTINGS_VERSION,
+		home: {
+			notePath: str(home.notePath, D.home.notePath).trim(),
+			ribbonIcon: bool(home.ribbonIcon, D.home.ribbonIcon),
+		},
 		layout: {
 			maxWidth: clampNumber(layout.maxWidth, 320, 2000, D.layout.maxWidth),
 			defaultWidgets: strList(layout.defaultWidgets, D.layout.defaultWidgets),

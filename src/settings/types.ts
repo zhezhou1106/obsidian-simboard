@@ -17,6 +17,12 @@ export interface QuickLink {
  */
 export interface SimboardSettings {
 	settingsVersion: number;
+	home: {
+		/** Note opened by the "Open dashboard" command. Empty = first note with a simboard block. */
+		notePath: string;
+		/** Show a ribbon icon that runs "Open dashboard". */
+		ribbonIcon: boolean;
+	};
 	layout: {
 		/** Max width of the dashboard column, in px. */
 		maxWidth: number;

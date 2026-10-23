@@ -42,6 +42,17 @@ banner:
 
 Cards that are next to each other share a row and stack on narrow panes.
 
+### Commands
+
+| Command                            | What it does                                                              |
+| ---------------------------------- | ------------------------------------------------------------------------- |
+| **Simboard: Open dashboard**       | Opens the dashboard note (also on the ribbon icon). Reuses an open tab.   |
+| **Simboard: Insert dashboard block** | Inserts an empty `simboard` block at the cursor.                        |
+| **Simboard: Refresh dashboards**   | Re-renders every open dashboard.                                          |
+
+Set the dashboard note in the settings. If you leave it empty, the first note
+that contains a `simboard` block is used.
+
 ### Full-page dashboard
 
 Add the `simboard-home` CSS class to the note. It hides the note's title and

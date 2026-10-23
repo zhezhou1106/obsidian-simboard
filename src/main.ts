@@ -1,5 +1,7 @@
 import { debounce, Plugin } from "obsidian";
+import { openDashboard, registerCommands, RIBBON_ICON } from "./commands";
 import { DashboardRenderer } from "./core/DashboardRenderer";
+import { t } from "./i18n";
 import { ActivityTracker } from "./services/ActivityTracker";
 import { DailyNotesService } from "./services/DailyNotes";
 import { TodoStore } from "./services/TodoStore";
@@ -17,6 +19,8 @@ export default class SimboardPlugin extends Plugin {
 	todos!: TodoStore;
 	/** Dashboards currently rendered in any open note. */
 	readonly renderers = new Set<DashboardRenderer>();
+
+	private ribbonEl: HTMLElement | null = null;
 
 	/** Coalesces rapid setting edits (typing, slider drags) into one re-render. */
 	private readonly refreshDebounced = debounce(() => this.refreshDashboards(), 200, true);
@@ -44,7 +48,19 @@ export default class SimboardPlugin extends Plugin {
 			ctx.addChild(new DashboardRenderer(el, this, ctx.sourcePath, source));
 		});
 
+		registerCommands(this, CODE_BLOCK_LANGUAGE);
+		this.updateRibbon();
 		this.addSettingTab(new SimboardSettingTab(this.app, this));
+	}
+
+	/** Shows or hides the "Open dashboard" ribbon icon to match the settings. */
+	updateRibbon(): void {
+		if (this.settings.home.ribbonIcon && !this.ribbonEl) {
+			this.ribbonEl = this.addRibbonIcon(RIBBON_ICON, t("command.open"), () => void openDashboard(this, CODE_BLOCK_LANGUAGE));
+		} else if (!this.settings.home.ribbonIcon && this.ribbonEl) {
+			this.ribbonEl.remove();
+			this.ribbonEl = null;
+		}
 	}
 
 	onunload(): void {

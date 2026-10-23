@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Commands: open the dashboard note, insert a dashboard block, refresh open dashboards.
+- Optional ribbon icon that opens the dashboard; "Dashboard note" setting.
+
 ## 0.1.0
 
 - First version as a standalone plugin (previously a vault-local "dashboard" plugin).

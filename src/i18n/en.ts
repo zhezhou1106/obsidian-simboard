@@ -39,6 +39,12 @@ export const en = {
 	"vault.heat.tooltip": "{date} — {n} changes",
 	"vault.heat.tooltip.one": "{date} — 1 change",
 
+	// commands
+	"command.open": "Open dashboard",
+	"command.insert": "Insert dashboard block",
+	"command.refresh": "Refresh dashboards",
+	"command.open.notFound": "No dashboard note found. Set one in the Simboard settings, or insert a dashboard block into a note.",
+
 	// renderer
 	"error.render": "Simboard error: {error}",
 	"error.unknownWidget": "Unknown widget \"{id}\". Available: {list}",

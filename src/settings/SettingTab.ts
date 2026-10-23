@@ -44,6 +44,23 @@ export class SimboardSettingTab extends PluginSettingTab {
 		const { containerEl } = this;
 		containerEl.empty();
 
+		// ---------- dashboard note ----------
+		new Setting(containerEl)
+			.setName("Dashboard note")
+			.setDesc("Note opened by the \"Open dashboard\" command and ribbon icon. Leave empty to use the first note that contains a simboard block.")
+			.addText((text) => this.pathText(text, "markdown", this.s.home.notePath, (v) => (this.s.home.notePath = v)));
+
+		new Setting(containerEl)
+			.setName("Ribbon icon")
+			.setDesc("Show an icon in the left ribbon that opens the dashboard note.")
+			.addToggle((tg) =>
+				tg.setValue(this.s.home.ribbonIcon).onChange((v) => {
+					this.s.home.ribbonIcon = v;
+					this.plugin.updateRibbon();
+					this.save();
+				}),
+			);
+
 		// ---------- layout ----------
 		new Setting(containerEl)
 			.setName("Content max width")
