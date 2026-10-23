@@ -1,0 +1,14 @@
+/* Simboard styles — bundled into styles.css by esbuild.
+   Every rule is scoped to .simboard (the dashboard root), .simboard-home (the
+   opt-in cssclass for a full-bleed dashboard note) or a simboard-* settings
+   class, so nothing leaks into the rest of the app. */
+@import "./base.css";
+@import "./page.css";
+@import "./layout.css";
+@import "./widgets/banner.css";
+@import "./widgets/calendar.css";
+@import "./widgets/quick-links.css";
+@import "./widgets/todos.css";
+@import "./widgets/vault-stats.css";
+@import "./eink.css";
+@import "./settings.css";

@@ -1,0 +1,33 @@
+/* ---------- full-bleed dashboard note ----------
+   Opt-in: add `cssclasses: [simboard-home]` to the note's properties to hide
+   its title and properties and let the dashboard use the full pane width. */
+.simboard-home .inline-title,
+.simboard-home .metadata-container,
+.simboard-home .markdown-preview-view .frontmatter,
+.simboard-home .mod-header { display: none !important; }
+
+.simboard-home {
+  --file-line-width: 100% !important;
+  --line-width: 100% !important;
+  --line-width-adaptive: 100% !important;
+  --max-width: 100% !important;
+  --file-margins: 0 !important;
+}
+.simboard-home .markdown-preview-sizer,
+.simboard-home .markdown-preview-sizer > div,
+.simboard-home .cm-sizer,
+.simboard-home .cm-contentContainer,
+.simboard-home .cm-content { max-width: 100% !important; width: 100% !important; margin: 0 !important; }
+
+/* No viewport-filling min-height, so the note doesn't scroll into empty space. */
+.simboard-home .markdown-preview-sizer { min-height: 0 !important; padding-bottom: 0 !important; }
+.simboard-home .markdown-preview-view,
+.simboard-home .markdown-reading-view { min-height: 0 !important; }
+
+.simboard-home .markdown-preview-view,
+.simboard-home .markdown-source-view .cm-content,
+.simboard-home .cm-line { padding-left: 0 !important; padding-right: 0 !important; }
+.simboard-home .markdown-preview-view { padding: 0 !important; }
+.simboard-home p:empty { display: none; }
+
+.block-language-simboard { padding: 0; margin: 0; }

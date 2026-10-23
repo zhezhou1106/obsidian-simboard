@@ -1,0 +1,4 @@
+/* ---------- settings tab: quick link rows ---------- */
+.simboard-quicklink-row .setting-item-control { flex-wrap: wrap; gap: 6px; justify-content: flex-end; }
+.simboard-quicklink-row .setting-item-control input[type="text"] { flex: 1 1 140px; min-width: 0; }
+.simboard-quicklink-row .setting-item-info { display: none; }

@@ -1,0 +1,21 @@
+/* ---------- column + card rows ----------
+   Full-width widgets stack in .sb-column; consecutive card widgets share a
+   .sb-row whose columns come from each widget's cardWeight (--sb-cols). */
+.simboard .sb-column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  margin: 0;
+  padding: 2px 0 22px;
+}
+.simboard .sb-row {
+  display: grid;
+  grid-template-columns: var(--sb-cols, minmax(0, 1fr));
+  gap: 10px;
+  align-items: start;
+  width: 100%;
+}
+@container simboard (max-width: 680px) {
+  .simboard .sb-row { grid-template-columns: minmax(0, 1fr); }
+}

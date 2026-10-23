@@ -1,0 +1,51 @@
+/* ---------- banner: wallpaper, greeting, clock ----------
+   The box keeps --sb-banner-ratio; images with another ratio are cropped to
+   their center — never stretched or letterboxed. */
+.simboard .sb-banner-wrap { position: relative; }
+.simboard .sb-banner {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  margin: 0;
+  aspect-ratio: var(--sb-banner-ratio, 16 / 9);
+  border-radius: 13px;
+  background: var(--sb-surface);
+}
+.simboard .sb-banner--empty {
+  background: linear-gradient(135deg, var(--sb-surface), rgba(var(--sb-accent-rgb), 0.25));
+}
+.simboard .sb-banner-img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+.simboard .sb-banner-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(8, 11, 15, 0.15) 0%, rgba(8, 11, 15, 0) 34%, rgba(8, 11, 15, 0.75) 100%);
+}
+.simboard .sb-greet { position: absolute; left: 22px; right: 22px; bottom: 16px; z-index: 3; }
+.simboard .sb-greet-line { color: #d7e0e9; font-size: 14px; font-weight: 600; text-shadow: 0 1px 8px #000; }
+.simboard .sb-clock {
+  margin-top: 2px;
+  color: #f4f8fb;
+  font-size: 44px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.7);
+}
+.simboard .sb-clock-secs { margin-left: 2px; font-size: 20px; font-weight: 700; color: #cfeaf5; vertical-align: super; }
+.simboard .sb-date { margin-top: 3px; color: #c6d1db; font-size: 13px; text-shadow: 0 1px 8px #000; }
+@container simboard (max-width: 860px) {
+  .simboard .sb-clock { font-size: 38px; }
+}
+
+/* slot for overlaid widgets (the calendar), upper-right corner */
+.simboard .sb-banner-overlay { position: absolute; inset: 0; pointer-events: none; z-index: 4; }
+.simboard .sb-banner-overlay > * { pointer-events: auto; }

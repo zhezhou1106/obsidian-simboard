@@ -1,0 +1,18 @@
+/* ---------- quick links row ---------- */
+.simboard .sb-quicklinks { display: flex; flex-wrap: wrap; gap: 8px; width: 100%; }
+.simboard .sb-qlink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 14px;
+  background: var(--sb-surface);
+  border: 1px solid var(--sb-border);
+  border-radius: 11px;
+  color: var(--sb-text);
+  font-size: 12.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: 0.12s;
+}
+.simboard .sb-qlink:hover { border-color: var(--sb-border-2); background: var(--sb-accent-deep); color: var(--sb-on-accent); }
